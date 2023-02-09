@@ -4,10 +4,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { FormComponentComponent } from './form-component/form-component.component';
 import { ChildComponent } from './form-component/child/child.component';
+import { RouterModule, Routes } from '@angular/router';
+import { NewComponent } from './new/new.component';
 
+const appRoutes: Routes = [
+  {
+    path: '/form',
+    component: FormComponentComponent,
+  },
+];
 @NgModule({
-  declarations: [AppComponent, FormComponentComponent, ChildComponent],
-  imports: [ReactiveFormsModule, BrowserModule],
+  declarations: [AppComponent, FormComponentComponent, ChildComponent, NewComponent],
+  imports: [ReactiveFormsModule, BrowserModule, RouterModule],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -13,7 +13,10 @@
       type="text"
       #customInput
       formControlName="customInp"
-      (keyup.enter)="validateData()"
+      (keyup)="newFn()"
     />
+  </div>
+  <div *ngIf="customInp && customInp.touched && isWrong" class="err-div">
+    {{ errMsg }}
   </div>
 </form>

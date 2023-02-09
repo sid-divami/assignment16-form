@@ -50,11 +50,15 @@
       </span>
     </div>
     <div class="form-control">
-      <app-child></app-child>
+      <app-child (customVal)="getCustomVal($event)"></app-child>
     </div>
     <div class="form-control">
       <button class="btn" type="reset">Reset Form</button>
       <button class="btn">Submit</button>
+    </div>
+    <div class="form-control">
+      <div class="left">Additional Data</div>
+      <div class="left">{{}}}</div>
     </div>
   </div>
 </form>

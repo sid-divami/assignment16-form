@@ -35,6 +35,10 @@ export class FormComponentComponent {
     userName: new FormControl(''),
   });
 
+  getCustomVal(val: string) {
+    console.log('Receieved in parent', val);
+  }
+
   get firstName() {
     return this.userInfo.get('firstName');
   }

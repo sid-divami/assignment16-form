@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -13,11 +13,15 @@ export class ChildComponent {
   // pattern matches false for error validation
   @Output() customVal = new EventEmitter<string>();
   @Output() isMatch = new EventEmitter<boolean>();
+
+  inputField: HTMLInputElement | null = document.querySelector('#customInput');
   //Selected Value : The dropdown option user will chose
   selectedValue: string = '';
+  isWrong: boolean = false;
+  errMsg: string = '';
   // InputData : The data entered by user for corresponding data type
-  inputData!: string;
-
+  inputData: any;
+  noMsg = 'No text entered';
   //Custom Pattern : The pattern that should test our input text based off the select value
   customPattern!: RegExp;
   options = ['Number', 'String', 'Hex', 'Binary'];
@@ -28,7 +32,11 @@ export class ChildComponent {
 
   onChange(val: string) {
     this.selectedValue = val;
+    this.customInp?.setValue('');
+    console.log(this.selectedValue);
+
     this.determinePattern();
+    this.validateData();
   }
 
   // Custom function that will determine what pattern
@@ -42,16 +50,38 @@ export class ChildComponent {
       this.customPattern = /^\w+$/;
     }
     if (this.selectedValue === 'Hex') {
-      this.customPattern = /^#[a-fA-F0-9]+$/;
+      this.customPattern = /^#[a-fA-F0-9]{6}$/;
     }
     if (this.selectedValue === 'Binary') {
       this.customPattern = /^[0-1]+$/;
     }
   }
   validateData() {
-    if (this.customInp.value !== null || this.customInp.value !== undefined) {
-      this.inputData = this.customInp.value;
+    // edge case 1 : if no text is entered
+    if (this.inputData === this.noMsg) {
+      // Handle error
+      this.isWrong = true;
+      this.errMsg = 'Enter some text first';
+      // alert('Enter Text');
+    } else {
+      console.log(
+        'testing the pattern',
+        this.customPattern.test(this.inputData)
+      );
+      if (this.customPattern.test(this.inputData)) {
+        this.isWrong = false;
+        this.customVal.emit(this.inputData);
+      } else {
+        this.isWrong = true;
+        this.errMsg = `Input data does not follow ${this.selectedValue}`;
+      }
     }
+  }
+  newFn() {
+    this.inputData = this.customInp?.value || this.noMsg;
+    console.log(this.inputData);
+    // Test data with customPattern
+    this.validateData();
   }
 
   // Getter methods for formControl
