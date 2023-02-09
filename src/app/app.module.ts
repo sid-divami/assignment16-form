@@ -6,18 +6,28 @@ import { FormComponentComponent } from './form-component/form-component.componen
 import { ChildComponent } from './form-component/child/child.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NewComponent } from './new/new.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 const appRoutes: Routes = [
   {
     path: '',
-    component: NewComponent,
+    component: WelcomeComponent,
   },
   {
     path: 'form',
     component: FormComponentComponent,
   },
+  {
+    path: 'success',
+    component: NewComponent,
+  },
 ];
 @NgModule({
-  declarations: [AppComponent, FormComponentComponent, ChildComponent],
+  declarations: [
+    AppComponent,
+    FormComponentComponent,
+    ChildComponent,
+    WelcomeComponent,
+  ],
   imports: [
     ReactiveFormsModule,
     BrowserModule,

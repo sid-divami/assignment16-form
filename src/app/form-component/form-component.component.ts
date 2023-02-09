@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Route, Router } from '@angular/router';
 @Component({
   selector: 'app-form-component',
   templateUrl: './form-component.component.html',
@@ -9,6 +10,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 /* Initializing formGroup for user-data inside of form-component.
  */
 export class FormComponentComponent {
+  constructor(private router: Router) {}
+  // receiving additionalData from child
+  dataFromChild: string = '';
+  submittedData: any;
   // fName: string = '';
   // Form Group with
   userInfo = new FormGroup({
@@ -36,7 +41,7 @@ export class FormComponentComponent {
   });
 
   getCustomVal(val: string) {
-    console.log('Receieved in parent', val);
+    this.dataFromChild = val;
   }
 
   get firstName() {
@@ -66,8 +71,16 @@ export class FormComponentComponent {
   // }
   // On Submit Event
   submitUserData() {
-    console.log('Submitted, data is ', this.userInfo);
+    if (this.userInfo.status) {
+      this.submittedData = this.userInfo.value;
+      this.router.navigate(['success'], {
+        state: {
+          submittedData: this.submittedData,
+          AdditionalData: this.dataFromChild,
+        },
+      });
+    }
     // this.validateUserData();
-    console.log(this.userInfo.value);
+    // console.log(this.userInfo);
   }
 }
