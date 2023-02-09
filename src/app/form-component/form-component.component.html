@@ -1,0 +1,60 @@
+<form [formGroup]="userInfo" (ngSubmit)="submitUserData()">
+  <div class="container">
+    <div class="form-control">
+      <label> First Name: </label>
+      <input type="text" formControlName="firstName" />
+      <span></span>
+      <span
+        class="text-danger"
+        *ngIf="firstName && firstName.touched && firstName.invalid"
+        >Minimum 6 characters</span
+      >
+    </div>
+    <div class="form-control">
+      <label> Last Name: </label>
+      <input type="text" formControlName="lastName" />
+      <span
+        class="text-danger"
+        *ngIf="lastName && lastName.touched && lastName.invalid"
+        >Minimum 6 chacraters</span
+      >
+    </div>
+    <div class="form-control">
+      <label> Email : </label>
+      <input type="email" formControlName="email" />
+      <span class="text-danger" *ngIf="email && email.touched && email.invalid"
+        >Email is invalid</span
+      >
+    </div>
+    <div class="form-control">
+      <label> Phone Number : </label>
+      <input type="tel" formControlName="phone" />
+      <span class="text-danger" *ngIf="phone && phone.touched && phone.invalid"
+        >Phonenumber is invalid</span
+      >
+    </div>
+    <div class="form-control">
+      <label> Username </label>
+      <input type="text" formControlName="userName" />
+      <span
+        class="text-danger"
+        *ngIf="userName && userName.touched && userName.invalid"
+        >Invalid Username</span
+      >
+    </div>
+    <div class="form-control">
+      <label> Age: </label>
+      <input type="text" formControlName="age" />
+      <span class="text-danger" *ngIf="age && age.touched && age.invalid"
+        >Age must be between 0 and 999 years
+      </span>
+    </div>
+    <div class="form-control">
+      <app-child></app-child>
+    </div>
+    <div class="form-control">
+      <button class="btn" type="reset">Reset Form</button>
+      <button class="btn">Submit</button>
+    </div>
+  </div>
+</form>

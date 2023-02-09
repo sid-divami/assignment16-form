@@ -1,0 +1,19 @@
+<form [formGroup]="childData">
+  <div class="form-control">
+    <select
+      #dropDown
+      type="select"
+      formControlName="dropDownval"
+      (change)="onChange(dropDown.value)"
+    >
+      <option disabled>Select Data Type</option>
+      <option *ngFor="let option of options">{{ option }}</option>
+    </select>
+    <input
+      type="text"
+      #customInput
+      formControlName="customInp"
+      (keyup.enter)="validateData()"
+    />
+  </div>
+</form>
