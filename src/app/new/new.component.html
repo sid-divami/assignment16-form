@@ -1,9 +1,35 @@
 <h1>Your Details !</h1>
-<div class="container">
+<!-- <div class="container">
   <div class="row">
     Your Name : {{ this.data.firstName }} {{ this.data.lastName }}
   </div>
   <div class="row">Your Email : {{ this.data.email }}</div>
   <div class="row">Your UserName : {{ this.data.userName }}</div>
   <div class="row">Your Phone : {{ this.data.phone }}</div>
+</div> -->
+
+<div class="container">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+  <div class="row">
+    <h3>User's Details</h3>
+    <table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Phone</th>
+      </tr>
+      <tr *ngFor="let user of data">
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.userName }}</td>
+        <div>{{ user.phone }}</div>
+      </tr>
+    </table>
+  </div>
 </div>

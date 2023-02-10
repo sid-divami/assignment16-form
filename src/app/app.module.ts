@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { FormComponentComponent } from './form-component/form-component.component';
 import { ChildComponent } from './form-component/child/child.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NewComponent } from './new/new.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { HttpClientModule } from '@angular/common/http';
 const appRoutes: Routes = [
   {
     path: '',
@@ -27,11 +28,14 @@ const appRoutes: Routes = [
     FormComponentComponent,
     ChildComponent,
     WelcomeComponent,
+    NewComponent,
   ],
   imports: [
+    FormsModule,
     ReactiveFormsModule,
     BrowserModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

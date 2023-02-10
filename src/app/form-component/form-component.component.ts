@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
+import { User } from '../model/user';
+import { CrudService, getUniqueId } from '../service/crud.service';
 @Component({
   selector: 'app-form-component',
   templateUrl: './form-component.component.html',
@@ -10,10 +12,14 @@ import { Route, Router } from '@angular/router';
 /* Initializing formGroup for user-data inside of form-component.
  */
 export class FormComponentComponent {
-  constructor(private router: Router) {}
-  // receiving additionalData from child
+  constructor(private router: Router, private httpService: CrudService) {}
+
+  newUser: User = new User();
+  // Random ID generator exported from service for unique identification.
+  randomId = getUniqueId(2);
+  // Additional Data received from dynamic child component.
   dataFromChild: string = '';
-  submittedData: any;
+
   // fName: string = '';
   // Form Group with
   userInfo = new FormGroup({
@@ -27,13 +33,13 @@ export class FormComponentComponent {
       Validators.minLength(6),
       Validators.maxLength(256),
     ]),
-    age: new FormControl('', [
+    age: new FormControl<number>(0, [
       Validators.required,
       Validators.min(0),
       Validators.max(999),
     ]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    phone: new FormControl('', [
+    phone: new FormControl<number>(0, [
       Validators.required,
       Validators.pattern('[0-9]{10}'),
     ]),
@@ -72,10 +78,31 @@ export class FormComponentComponent {
   // On Submit Event
   submitUserData() {
     if (this.userInfo.status) {
-      this.submittedData = this.userInfo.value;
+      console.log(this.userInfo.value);
+      // this.submittedData = { ...this.userInfo.value };
+      console.log(typeof this.userInfo.value.age);
+
+      this.newUser = {
+        firstName: this.userInfo.value.firstName ?? '',
+        lastName: this.userInfo.value.lastName ?? '',
+        email: this.userInfo.value.email ?? '',
+        userName: this.userInfo.value.userName ?? '',
+        age: this.userInfo.value.age ?? 0,
+        id: this.randomId ?? '',
+      };
+      // Make a POST request to the mock backend using CrudService
+      this.httpService.addUser(this.newUser).subscribe(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+
       this.router.navigate(['success'], {
         state: {
-          submittedData: this.submittedData,
+          submittedData: this.newUser,
           AdditionalData: this.dataFromChild,
         },
       });
